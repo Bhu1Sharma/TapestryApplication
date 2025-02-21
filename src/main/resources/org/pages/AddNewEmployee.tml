@@ -1,0 +1,53 @@
+
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd" xmlns:p="tapestry:parameter">
+<t:header />
+<head>
+    <title> Add New Employee</title>
+    <script>
+        function showImagePopup(imageUrl) {
+            let popup = window.open("", "Employee Image", "width=400,height=400");
+            popup.document.write('&lt;img src="' + imageUrl + '" width="100%" />');
+        }
+    </script>
+    <style>
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<t:form t:id="addEmployeeForm">
+    <p>
+        <label>Name:</label>
+        <t:textfield t:value="name"  t:validate="required"/>
+    </p>
+    <p>
+        <label>Age:</label>
+        <t:textfield t:value="age" min="18" max="65" t:validate="required"/>
+    </p>
+    <p>
+        <label>Address:</label>
+        <t:textfield t:value="address" t:validate="required"/>
+    </p>
+
+    <t:if test="errorMessage">
+        <div class="error">${errorMessage}</div>
+    </t:if>
+
+    <p><strong>Designation:</strong> <t:zone t:id="designationZone">${employee.designation}</t:zone></p>
+
+    <t:actionlink t:id="showImage" t:mixins="Confirm" onclick="showImagePopup('${employee.imageUrl}')">[IMAGE]</t:actionlink>
+
+    <t:eventlink t:id="promoteEmployee" context="employee.id">[PROMOTE]</t:eventlink>
+
+    <p>
+        <button type="submit">Add Employee</button>
+    </p>
+</t:form>
+<t:pagelink page="Login" t:id="close">[CLOSE]</t:pagelink>
+<t:pagelink page="EmployeeList">Back to Employee List</t:pagelink>
+
+<t:assets type="script" src="../webapp/mybootstrap/js/validateAge.js"/>
+<!--<script src='../mybootstrap/js/validateAge.js'></script>-->
+<script type="text/javascript" src="context:mybootstrap/js/validateAge.js"></script>
+</html>
