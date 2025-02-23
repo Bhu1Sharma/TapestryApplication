@@ -1,6 +1,5 @@
 package org.data.repositories;
 
-import org.apache.tapestry5.ioc.annotations.Inject;
 import org.data.entities.Employee;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -16,13 +15,14 @@ import java.util.Map;
 @Repository
 public class EmployeeRepositoryImpl implements EmployeeRepository {
 
-//    @Inject
+    private final SessionFactory sessionFactory;
+
+    private final Map<String, String> users;
+
     @Autowired
-    private SessionFactory sessionFactory;
-
-    private static final Map<String, String> users = new HashMap<>();
-
-    static {
+    public EmployeeRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+        users = new HashMap<>();
         users.put("admin", "password123");
         users.put("user", "userpass");
     }

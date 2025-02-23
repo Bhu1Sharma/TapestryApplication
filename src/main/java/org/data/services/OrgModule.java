@@ -1,7 +1,6 @@
 package org.data.services;
 
 import org.apache.tapestry5.SymbolConstants;
-import org.apache.tapestry5.commons.Configuration;
 import org.apache.tapestry5.commons.MappedConfiguration;
 import org.apache.tapestry5.commons.OrderedConfiguration;
 import org.apache.tapestry5.http.services.Request;
@@ -10,64 +9,16 @@ import org.apache.tapestry5.http.services.RequestHandler;
 import org.apache.tapestry5.http.services.Response;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
-import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Local;
-import org.apache.tapestry5.ioc.annotations.SubModule;
 import org.apache.tapestry5.ioc.services.ApplicationDefaults;
-import org.apache.tapestry5.ioc.services.RegistryShutdownHub;
-import org.apache.tapestry5.ioc.services.RegistryShutdownListener;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.data.repositories.*;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
 import org.slf4j.Logger;
 
 import java.io.IOException;
-//@SubModule(TapestrySpringModule.class)
 public class OrgModule {
 
-    public static void bind(ServiceBinder binder)
-    {
-//        binder.bind(EmpService.class, EmpServiceImpl.class);
-        binder.bind(EmployeeRepository.class, EmployeeRepositoryImpl.class).eagerLoad();
-        binder.bind(LoginService.class, LoginServiceImpl.class);
-        binder.bind(EmployeeService.class, EmployeeServiceImpl.class).eagerLoad();
-        binder.bind(UserRepository.class, UserRepositoryImpl.class).eagerLoad();
-        binder.bind(UserService.class, UserServiceImpl.class);
-        binder.bind(PermissionRepository.class, PermissionRepositoryImpl.class);
-
-        // Make bind() calls on the binder object to define most IoC services.
-        // Use service builder methods (example below) when the implementation
-        // is provided inline, or requires more initialization than simply
-        // invoking the constructor.
-    }
-    public static SessionFactory buildSessionFactory(RegistryShutdownHub shutdownHub) {
-        try {
-            // Create registry
-            StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                    .configure("hibernate.cfg.xml") // Load settings from hibernate.cfg.xml
-                    .build();
-
-            // Create metadata
-            Metadata metadata = new MetadataSources(registry).buildMetadata();
-
-            // Create SessionFactory
-            SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
-
-            // Register shutdown hook
-            shutdownHub.addRegistryShutdownListener((Runnable) () -> {
-                StandardServiceRegistryBuilder.destroy(registry);
-                sessionFactory.close();
-            });
-
-            return sessionFactory;
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to build Hibernate SessionFactory", e);
-        }
-    }
     public static void contributeFactoryDefaults(
             MappedConfiguration<String, Object> configuration)
     {

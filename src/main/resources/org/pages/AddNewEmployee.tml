@@ -47,7 +47,7 @@
 <t:pagelink page="Login" t:id="close">[CLOSE]</t:pagelink>
 <t:pagelink page="EmployeeList">Back to Employee List</t:pagelink>
 
-<t:assets type="script" src="../webapp/mybootstrap/js/validateAge.js"/>
+<t:assets type="script" src="../webapp/mybootstrap/js/validateAge.js"/> <!-- Check: THIS IS CAUSING ISSUE-->
 <!--<script src='../mybootstrap/js/validateAge.js'></script>-->
 <script type="text/javascript" src="context:mybootstrap/js/validateAge.js"></script>
 </html>
