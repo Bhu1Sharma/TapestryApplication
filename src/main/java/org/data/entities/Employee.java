@@ -1,7 +1,7 @@
 package org.data.entities;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="employee")

@@ -9,22 +9,20 @@
     http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
    http://www.springframework.org/schema/context
    http://www.springframework.org/schema/context/spring-context.xsd">
-    <context:component-scan base-package="org.kane"/>
-    <tx:annotation-driven proxy-target-class="true"
-                          transaction-manager="transactionManager"/>
+    <context:component-scan base-package="org.data"/>
+
+
     <!-- Transaction Manager -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <!-- Define Your Beans -->
-    <bean id="employeeService" class="org.data.services.EmployeeServiceImpl"/>
-    <bean id="userService" class="org.data.services.UserServiceImpl"/>
-
+    <tx:annotation-driven proxy-target-class="true"
+                          transaction-manager="transactionManager"/>
 
     <!-- Hibernate SessionFactory -->
     <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <!--        <property name="packagesToScan" value="org"/>-->
         <property name="configLocations">

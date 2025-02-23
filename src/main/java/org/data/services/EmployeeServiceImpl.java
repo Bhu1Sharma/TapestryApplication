@@ -1,9 +1,7 @@
 package org.data.services;
 
-import org.apache.tapestry5.ioc.annotations.Inject;
 import org.data.entities.Employee;
 import org.data.repositories.EmployeeRepository;
-import org.data.repositories.EmployeeRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,23 +10,26 @@ import java.util.List;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+    private final EmployeeRepository employeeRepository;
+
     @Autowired
-//    @Inject
-    private EmployeeRepositoryImpl employeeRepositoryImpl;
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     @Override
     public void saveEmployee(Employee employee) {
-        employeeRepositoryImpl.saveEmployee(employee);
+        employeeRepository.saveEmployee(employee);
     }
 
     @Override
     public List<Employee> getAllEmployees() {
-        return employeeRepositoryImpl.getAllEmployees();
+        return employeeRepository.getAllEmployees();
     }
 
     @Override
     public Employee getEmployeeById(int id) {
-        return employeeRepositoryImpl.getEmployeeById(id);
+        return employeeRepository.getEmployeeById(id);
     }
 }
 
